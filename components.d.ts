@@ -22,8 +22,8 @@ declare module 'vue' {
     AModal: typeof import('ant-design-vue/es')['Modal']
     APagination: typeof import('ant-design-vue/es')['Pagination']
     ASkeleton: typeof import('ant-design-vue/es')['Skeleton']
-    CreateUserDialog: typeof import('./src/components/CreateUserDialog.vue')['default']
-    EditUserDialog: typeof import('./src/components/EditUserDialog.vue')['default']
+    CreateUserDialog: typeof import('./src/components/dialogs/CreateUserDialog.vue')['default']
+    EditUserDialog: typeof import('./src/components/dialogs/EditUserDialog.vue')['default']
     Navbar: typeof import('./src/components/Navbar.vue')['default']
     UsersTable: typeof import('./src/components/UsersTable.vue')['default']
   }

@@ -25,7 +25,6 @@ watch(() => props.isDialogVisible, val => {
       last_name: '',
       email: '',
     };
-    console.log(formState.value);
     isModal.value = val
   }
 })

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted, watchEffect } from 'vue'
 import IUser from '../models'
-import CreateUserDialog from './CreateUserDialog.vue';
-import EditUserDialog from './EditUserDialog.vue';
+import CreateUserDialog from './dialogs/CreateUserDialog.vue';
+import EditUserDialog from './dialogs/EditUserDialog.vue';
 import { useStore } from 'vuex'
 
 const store = useStore();
