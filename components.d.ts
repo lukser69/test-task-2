@@ -11,8 +11,10 @@ declare module 'vue' {
     AList: typeof import('ant-design-vue/es')['List']
     AListItem: typeof import('ant-design-vue/es')['ListItem']
     AListItemMeta: typeof import('ant-design-vue/es')['ListItemMeta']
+    AMenu: typeof import('ant-design-vue/es')['Menu']
     APagination: typeof import('ant-design-vue/es')['Pagination']
     ASkeleton: typeof import('ant-design-vue/es')['Skeleton']
+    Navbar: typeof import('./src/components/Navbar.vue')['default']
     UsersTable: typeof import('./src/components/UsersTable.vue')['default']
   }
 }
