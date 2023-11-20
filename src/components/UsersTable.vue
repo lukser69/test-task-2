@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { ref, onMounted, watchEffect } from 'vue'
 import IUser from '../models'
+import EditUserDialog from './EditUserDialog.vue';
 import { useStore } from 'vuex'
 
 const store = useStore();
 
 const users = ref<IUser[]>([]);
+
+const editableUser = ref<IUser>()
 
 const options = ref({
   selectedPage: 1,
@@ -13,7 +16,8 @@ const options = ref({
   totalUsers: 3,
 });
 
-const isLoading = ref(false)
+const isLoading = ref<boolean>(false);
+const isEditDialog = ref<boolean>(false);
 
 const fetchUsers = () => {  
   isLoading.value = true,
@@ -39,6 +43,17 @@ watchEffect(() => {
   options.value.totalUsers = store.getters.getTotalUsers || 1;
 })
 
+const showEditDialog = (user: IUser) => {
+  editableUser.value = user;
+  isEditDialog.value = true;
+}
+
+const editUser = (editedUser: IUser) => {
+  // Тут должен быть запрос на сервер
+
+  const userFoundIndex = users.value.findIndex(user => user.id === editedUser.id);
+  users.value[userFoundIndex] = {...editedUser};
+}
 </script>
 
 <template>
@@ -52,7 +67,12 @@ watchEffect(() => {
       <template #renderItem="{ item }">
         <a-list-item>
           <template #actions>
-            <a key="list-loadmore-edit">Редактировать</a>
+            <a
+              key="list-loadmore-edit"
+              @click="showEditDialog(item)"
+            >
+              Редактировать
+            </a>
           </template>
           <a-skeleton avatar :title="false" :loading="!!item.loading" active>
             <a-list-item-meta
@@ -79,6 +99,12 @@ watchEffect(() => {
     />
   </div>
   
+  <!-- Диалог для редактирования пользователя -->
+  <EditUserDialog
+    v-model:is-dialog-visible="isEditDialog"
+    :user="editableUser"
+    @updateUser="(user) => editUser(user)"
+  />
 </template>
 
 <style scoped></style>
