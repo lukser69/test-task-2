@@ -10,7 +10,8 @@ const store = createStore({
       state.users = payload;
     },
     addUser(state, payload) {
-      state.users.data.push(payload);
+      if (state.users.data.length < state.users.per_page)
+        state.users.data.push(payload);
     },
     editUser(state, payload) {
       const userFoundIndex = state.users.data.findIndex(user => user.id === payload.id);
