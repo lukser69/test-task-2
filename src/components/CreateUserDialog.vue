@@ -5,20 +5,27 @@ import type { Rule } from 'ant-design-vue/es/form';
 
 const props = defineProps<{
   isDialogVisible: boolean
-  user: IUser
 }>()
 
-const emit = defineEmits(['update:isDialogVisible','updateUser'])
+const emit = defineEmits(['update:isDialogVisible','createUser'])
 
 const formRef = ref();
 const formState = ref<IUser>();
 
 const isModal = ref<boolean>(false);
 
+
 // отслеживаем открытие окна
 watch(() => props.isDialogVisible, val => {
   if (val) {    
-    formState.value = {...props.user};
+    formState.value = {
+      id: Date.now(),
+      avatar: '',
+      first_name: '',
+      last_name: '',
+      email: '',
+    };
+    console.log(formState.value);
     isModal.value = val
   }
 })
@@ -31,8 +38,10 @@ watch(isModal, val => {
 })
 
 const onSave = () => {
+  console.log(formState.value);
+  
   formRef.value.validate().then(() => {
-    emit('updateUser', {...formState.value})
+    emit('createUser', {...formState.value})
     isModal.value = false;
     formRef.value.resetFields();
   })
@@ -61,7 +70,7 @@ const rules: Record<string, Rule[]> = {
     v-model:open="isModal"
     title="Редактирование пользователя"
     cancelText="Отмена"
-    okText="Сохранить"
+    okText="Создать"
     closable
     @cancel="() => isModal = false"
     @ok="onSave"

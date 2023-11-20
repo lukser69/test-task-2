@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, watchEffect } from 'vue'
 import IUser from '../models'
+import CreateUserDialog from './CreateUserDialog.vue';
 import EditUserDialog from './EditUserDialog.vue';
 import { useStore } from 'vuex'
 
@@ -17,6 +18,7 @@ const options = ref({
 });
 
 const isLoading = ref<boolean>(false);
+const isCreateDialog = ref<boolean>(false);
 const isEditDialog = ref<boolean>(false);
 
 const fetchUsers = () => {  
@@ -48,16 +50,29 @@ const showEditDialog = (user: IUser) => {
   isEditDialog.value = true;
 }
 
+const createUser = (newUser: IUser) => {
+  // Тут должен быть запрос на сервер
+  users.value.push(newUser);
+}
+
 const editUser = (editedUser: IUser) => {
   // Тут должен быть запрос на сервер
 
   const userFoundIndex = users.value.findIndex(user => user.id === editedUser.id);
-  users.value[userFoundIndex] = {...editedUser};
+  users.value[userFoundIndex] = editedUser;
 }
 </script>
 
 <template>
   <div>
+    <div class="wrapper--btn-create-user">
+      <a-button 
+        type="primary"
+        @click="isCreateDialog = true"
+      >
+        Создать
+      </a-button>
+    </div>
     <a-list
       class="demo-loadmore-list"
       :loading="isLoading"
@@ -99,6 +114,12 @@ const editUser = (editedUser: IUser) => {
     />
   </div>
   
+  <!-- Диалог для создания пользователя -->
+  <CreateUserDialog
+    v-model:is-dialog-visible="isCreateDialog"
+    @createUser="(user) => createUser(user)"
+  />
+  
   <!-- Диалог для редактирования пользователя -->
   <EditUserDialog
     v-model:is-dialog-visible="isEditDialog"
@@ -107,4 +128,11 @@ const editUser = (editedUser: IUser) => {
   />
 </template>
 
-<style scoped></style>
+<style scoped>
+.wrapper--btn-create-user {
+  margin: 8px 16px 0;
+
+  display: flex;
+  justify-content: end;
+}
+</style>
