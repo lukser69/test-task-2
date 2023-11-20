@@ -19,7 +19,6 @@ const isModal = ref<boolean>(false);
 watch(() => props.isDialogVisible, val => {
   if (val) {    
     formState.value = {
-      id: Date.now(),
       avatar: '',
       first_name: '',
       last_name: '',
@@ -37,8 +36,6 @@ watch(isModal, val => {
 })
 
 const onSave = () => {
-  console.log(formState.value);
-  
   formRef.value.validate().then(() => {
     emit('createUser', {...formState.value})
     isModal.value = false;

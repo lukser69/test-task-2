@@ -51,15 +51,11 @@ const showEditDialog = (user: IUser) => {
 }
 
 const createUser = (newUser: IUser) => {
-  // Тут должен быть запрос на сервер
-  users.value.push(newUser);
+  store.dispatch('createUser', newUser);
 }
 
 const editUser = (editedUser: IUser) => {
-  // Тут должен быть запрос на сервер
-
-  const userFoundIndex = users.value.findIndex(user => user.id === editedUser.id);
-  users.value[userFoundIndex] = editedUser;
+  store.dispatch('updateUser', editedUser);
 }
 </script>
 
