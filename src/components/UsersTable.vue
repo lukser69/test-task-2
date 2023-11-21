@@ -1,17 +1,23 @@
 <script setup lang="ts">
-import { ref, onMounted, watchEffect } from 'vue'
-import IUser from '../models'
+import { ref, onMounted, watchEffect } from 'vue';
+import { IUser, IOptions } from '../models';
 import CreateUserDialog from './dialogs/CreateUserDialog.vue';
 import EditUserDialog from './dialogs/EditUserDialog.vue';
 import { useStore } from 'vuex'
+import { key } from '../store'
 
-const store = useStore();
+const store = useStore(key);
 
 const users = ref<IUser[]>([]);
 
-const editableUser = ref<IUser>()
+const editableUser = ref<IUser>({
+  avatar: '',
+  first_name: '',
+  last_name: '',
+  email: '',
+})
 
-const options = ref({
+const options = ref<IOptions>({
   selectedPage: 1,
   perPage: 10,
   totalUsers: 3,
