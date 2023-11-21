@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import IUser from '../models';
+import { IUser } from '../../models';
 import type { Rule } from 'ant-design-vue/es/form';
 
 const props = defineProps<{
@@ -10,7 +10,12 @@ const props = defineProps<{
 const emit = defineEmits(['update:isDialogVisible','createUser'])
 
 const formRef = ref();
-const formState = ref<IUser>();
+const formState = ref<IUser>({
+  avatar: '',
+  first_name: '',
+  last_name: '',
+  email: '',
+});
 
 const isModal = ref<boolean>(false);
 
@@ -41,7 +46,7 @@ const onSave = () => {
     isModal.value = false;
     formRef.value.resetFields();
   })
-  .catch(error => {
+  .catch((error: ErrorEvent) => {
     console.error(error)
   })
 }
